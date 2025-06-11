@@ -26,7 +26,7 @@ const features = [
 			<div class="row justify-content-center">
 				<div class="col-12 col-md-8 col-lg-6 text-center">
 					<div class="rolodex">
-						<p>Your</p>
+						<p class="your-text">Your</p>
 						<ul class="roll-one">
 							<li>ground</li>
 							<li>surface</li>
@@ -44,6 +44,11 @@ const features = [
 							<li>trading</li>
 							<li>compliance</li>
 						</ul>
+						<div class="final-text">
+							<span class="assets">assets</span>
+							<span class="on">on</span>
+							<span class="basin-logix">Basin Logix</span>
+						</div>
 					</div>
 					<p><strong>Basin Logix makes it easy to account for all your water resources quickly, accurately, and confidently.</strong></p>
 					
@@ -265,6 +270,32 @@ const features = [
 		font-weight: 600;
 	}
 
+	.final-text {
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		float: left;
+		line-height: 3.5rem;
+		font-size: 2.5rem;
+		font-weight: 600;
+		animation: final-text-appear 21s forwards cubic-bezier(.75,0,.25,1);
+	}
+
+	.final-text .assets {
+		color: #3c8556;
+		font-weight: 700;
+	}
+
+	.final-text .on {
+		color: var(--black);
+	}
+
+	.final-text .basin-logix {
+		color: #3871b8;
+		font-weight: 700;
+	}
+
 	.rolodex li {
 		color: var(--primary-color);
 		font-weight: 700;
@@ -285,7 +316,7 @@ const features = [
 	}
 
 	.roll-one {
-		animation: roll-up-one 18s infinite cubic-bezier(.75,0,.25,1);
+		animation: roll-up-one 21s forwards cubic-bezier(.75,0,.25,1);
 	}
 
 	.roll-two {
@@ -295,44 +326,58 @@ const features = [
 	}
 
 	.word2 {
-		animation: word2-shift 18s infinite cubic-bezier(.75,0,.25,1);
+		animation: word2-shift 21s forwards cubic-bezier(.75,0,.25,1);
 	}
 
 	.water {
 		position: absolute;
 		top: 0;
 		left: 0;
-		animation: water-shift 18s infinite cubic-bezier(.75,0,.25,1);
+		animation: water-shift 21s forwards cubic-bezier(.75,0,.25,1);
 	}
 
 	@keyframes roll-up-one {
 		0% { transform: translateY(0) }
-		16.66% { transform: translateY(-3.5rem) }
-		33.33% { transform: translateY(-7rem) }
-		50% { transform: translateY(-10.5rem) }
-		66.66% { transform: translateY(-14rem) }
-		83.33% { transform: translateY(-17.5rem) }
-		100% { transform: translateY(0) }
+		14.28% { transform: translateY(-3.5rem) }
+		28.57% { transform: translateY(-7rem) }
+		42.85% { transform: translateY(-10.5rem) }
+		57.14% { transform: translateY(-14rem) }
+		71.42% { transform: translateY(-17.5rem) }
+		85.71% { transform: translateY(-21rem) }
+		100% { transform: translateY(-21rem) }
 	}
 
 	@keyframes water-shift {
 		0% { transform: translateX(245px) }
-		16.66% { transform: translateX(260px) }
-		33.33% { transform: translateX(235px) }
-		50% { transform: translateX(253px) }
-		66.66% { transform: translateX(200px) }
-		83.33% { transform: translateX(205px) }
-		100% { transform: translateX(245px) }
+		14.28% { transform: translateX(260px) }
+		28.57% { transform: translateX(235px) }
+		42.85% { transform: translateX(253px) }
+		57.14% { transform: translateX(200px) }
+		71.42% { transform: translateX(205px) }
+		85.71% { transform: translateX(100px) }
+		100% { transform: translateX(100px) }
 	}
 
 	@keyframes word2-shift {
 		0% { transform: translateX(355px) translateY(0) }
-		16.66% { transform: translateX(370px) translateY(-3.5rem) }
-		33.33% { transform: translateX(345px) translateY(-7rem) }
-		50% { transform: translateX(363px) translateY(-10.5rem) }
-		66.66% { transform: translateX(310px) translateY(-14rem) }
-		83.33% { transform: translateX(315px) translateY(-17.5rem) }
-		100% { transform: translateX(355px) translateY(0) }
+		14.28% { transform: translateX(370px) translateY(-3.5rem) }
+		28.57% { transform: translateX(345px) translateY(-7rem) }
+		42.85% { transform: translateX(363px) translateY(-10.5rem) }
+		57.14% { transform: translateX(310px) translateY(-14rem) }
+		71.42% { transform: translateX(315px) translateY(-17.5rem) }
+		85.71% { transform: translateX(300px) translateY(-21rem) }
+		100% { transform: translateX(300px) translateY(-21rem) }
+	}
+
+	@keyframes final-text-appear {
+		0% { opacity: 0; transform: translateX(260px) }
+		14.28% { opacity: 0; transform: translateX(260px) }
+		28.57% { opacity: 0; transform: translateX(260px) }
+		42.85% { opacity: 0; transform: translateX(260px) }
+		57.14% { opacity: 0; transform: translateX(260px) }
+		71.42% { opacity: 0; transform: translateX(260px) }
+		85.71% { opacity: 1; transform: translateX(220px) }
+		100% { opacity: 1; transform: translateX(220px) }
 	}
 
 	html {
