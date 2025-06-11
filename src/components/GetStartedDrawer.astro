@@ -1,0 +1,522 @@
+---
+// Import the GSA data
+const gsaData = await import('../data/AllPostedGSA_2025-06-10.csv?raw').then(module => 
+  module.default.split('\n').filter(Boolean)
+);
+---
+
+<div id="get-started-drawer" class="drawer">
+  <div class="drawer-overlay"></div>
+  <div class="drawer-content">
+    <button class="drawer-close" aria-label="Close drawer">×</button>
+    <div class="drawer-header">
+      <h2>Get Started with Basin Logix</h2>
+      <p>Tell us about your organization and we'll help you get started.</p>
+    </div>
+    <form id="customer-intake-form" class="intake-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name *</label>
+          <input type="text" id="first-name" name="first-name" required>
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name *</label>
+          <input type="text" id="last-name" name="last-name" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone">
+      </div>
+
+      <div class="form-group">
+        <label for="title">Title *</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+
+      <div class="form-group">
+        <label for="company">Company/Institution *</label>
+        <input type="text" id="company" name="company" required>
+      </div>
+
+      <div class="form-group gsa-selection">
+        <label>Groundwater Sustainability Agencies (GSAs) *</label>
+        <div class="gsa-dropdown">
+          <button type="button" class="gsa-dropdown-button" id="gsa-dropdown-button">
+            Select GSAs <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="gsa-dropdown-content" id="gsa-dropdown-content">
+            <div class="gsa-search">
+              <input type="text" id="gsa-search" placeholder="Search GSAs..." />
+            </div>
+            <div class="gsa-list">
+              {gsaData.map((gsa) => (
+                <div class="gsa-option">
+                  <input type="checkbox" id={`gsa-${gsa}`} name="gsas" value={gsa} />
+                  <label for={`gsa-${gsa}`}>{gsa}</label>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="selected-gsas" id="selected-gsas"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="water-info">Tell us a little about your water, a bit of information will allow us to drill deeper: *</label>
+        <textarea id="water-info" name="water-info" rows="4" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-button">Submit</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Drawer functionality
+  const drawer = document.getElementById('get-started-drawer');
+  const overlay = drawer?.querySelector('.drawer-overlay');
+  const closeButton = drawer?.querySelector('.drawer-close');
+  const form = document.getElementById('customer-intake-form');
+
+  function openDrawer() {
+    drawer?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Add click event listeners to all "Get Started" buttons
+  document.querySelectorAll('[data-get-started]').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      openDrawer();
+    });
+  });
+
+  overlay?.addEventListener('click', closeDrawer);
+  closeButton?.addEventListener('click', closeDrawer);
+
+  // GSA Dropdown functionality
+  const gsaDropdownButton = document.getElementById('gsa-dropdown-button');
+  const gsaDropdownContent = document.getElementById('gsa-dropdown-content');
+  const gsaSearch = document.getElementById('gsa-search') as HTMLInputElement;
+  const selectedGsasContainer = document.getElementById('selected-gsas');
+  const gsaOptions = document.querySelectorAll('.gsa-option input[type="checkbox"]');
+
+  let selectedGsas = new Set<string>();
+
+  gsaDropdownButton?.addEventListener('click', () => {
+    gsaDropdownContent?.classList.toggle('show');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!gsaDropdownButton?.contains(e.target as Node) && 
+        !gsaDropdownContent?.contains(e.target as Node)) {
+      gsaDropdownContent?.classList.remove('show');
+    }
+  });
+
+  // Search functionality
+  gsaSearch?.addEventListener('input', (e) => {
+    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+    gsaOptions.forEach((option) => {
+      const label = option.nextElementSibling?.textContent?.toLowerCase() || '';
+      const optionContainer = option.closest('.gsa-option');
+      if (label.includes(searchTerm)) {
+        optionContainer?.classList.remove('hidden');
+      } else {
+        optionContainer?.classList.add('hidden');
+      }
+    });
+  });
+
+  // Handle GSA selection
+  gsaOptions.forEach((option) => {
+    option.addEventListener('change', (e) => {
+      const checkbox = e.target as HTMLInputElement;
+      const gsaName = checkbox.value;
+      
+      if (checkbox.checked) {
+        selectedGsas.add(gsaName);
+      } else {
+        selectedGsas.delete(gsaName);
+      }
+      
+      updateSelectedGsasDisplay();
+    });
+  });
+
+  function updateSelectedGsasDisplay() {
+    if (!selectedGsasContainer) return;
+    
+    selectedGsasContainer.innerHTML = '';
+    if (selectedGsas.size > 0) {
+      const selectedList = document.createElement('div');
+      selectedList.className = 'selected-gsas-list';
+      
+      selectedGsas.forEach(gsa => {
+        const gsaTag = document.createElement('div');
+        gsaTag.className = 'gsa-tag';
+        gsaTag.innerHTML = `
+          ${gsa}
+          <button type="button" class="remove-gsa" data-gsa="${gsa}">×</button>
+        `;
+        selectedList.appendChild(gsaTag);
+      });
+      
+      selectedGsasContainer.appendChild(selectedList);
+    }
+  }
+
+  // Handle removing GSAs from selected list
+  selectedGsasContainer?.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('remove-gsa')) {
+      const gsaName = target.getAttribute('data-gsa');
+      if (gsaName) {
+        selectedGsas.delete(gsaName);
+        const checkbox = document.querySelector(`input[value="${gsaName}"]`) as HTMLInputElement;
+        if (checkbox) checkbox.checked = false;
+        updateSelectedGsasDisplay();
+      }
+    }
+  });
+
+  // Form submission
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    // Create a new object to hold the form data
+    const data: Record<string, any> = {};
+    
+    // Add all form fields to the data object
+    for (const [key, value] of formData.entries()) {
+      data[key] = value;
+    }
+    
+    // Add selected GSAs to form data
+    data.gsas = Array.from(selectedGsas);
+    
+    try {
+      // TODO: Replace with your actual API endpoint
+      const response = await fetch('/api/submit-intake', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert('Thank you for your interest! We will contact you soon.');
+        closeDrawer();
+        (e.target as HTMLFormElement).reset();
+        selectedGsas.clear();
+        updateSelectedGsasDisplay();
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      alert('There was an error submitting the form. Please try again.');
+    }
+  });
+</script>
+
+<style>
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 600px;
+    height: 100vh;
+    background: var(--white);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1001;
+  }
+
+  .drawer.active {
+    right: 0;
+  }
+
+  .drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .drawer.active .drawer-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .drawer-content {
+    padding: 2rem;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1002;
+  }
+
+  .drawer-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--grey);
+    padding: 0.5rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  .drawer-close:hover {
+    color: var(--primary-color);
+  }
+
+  .drawer-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .drawer-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+  }
+
+  .drawer-header p {
+    color: var(--grey);
+    margin: 0;
+  }
+
+  .intake-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(27, 129, 187, 0.1);
+  }
+
+  .submit-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+  }
+
+  .submit-button:hover {
+    background: #156fa0;
+    transform: translateY(-1px);
+  }
+
+  /* GSA Selection Styles */
+  .gsa-selection {
+    position: relative;
+  }
+
+  .gsa-dropdown {
+    position: relative;
+  }
+
+  .gsa-dropdown-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  .gsa-dropdown-button:hover {
+    border-color: var(--primary-color);
+  }
+
+  .dropdown-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+  }
+
+  .gsa-dropdown-content.show .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+
+  .gsa-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .gsa-dropdown-content.show {
+    display: block;
+  }
+
+  .gsa-search {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    background: white;
+  }
+
+  .gsa-search input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+
+  .gsa-list {
+    padding: 0.5rem;
+  }
+
+  .gsa-option {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+
+  .gsa-option:hover {
+    background-color: rgba(27, 129, 187, 0.05);
+  }
+
+  .gsa-option.hidden {
+    display: none;
+  }
+
+  .gsa-option input[type="checkbox"] {
+    margin: 0;
+  }
+
+  .gsa-option label {
+    margin: 0;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .selected-gsas {
+    margin-top: 0.5rem;
+  }
+
+  .selected-gsas-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .gsa-tag {
+    background: rgba(27, 129, 187, 0.1);
+    color: var(--primary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .remove-gsa {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .remove-gsa:hover {
+    color: #156fa0;
+  }
+
+  @media (max-width: 768px) {
+    .drawer {
+      max-width: 100%;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style> 
