@@ -1,22 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from "astro:assets";
+import heroImg from "../assets/images/hero.jpg";
+import farmImg from "../assets/images/farm.jpg";
+import blxFlowDiagram from "../assets/images/blx_flow_for_website.svg";
+import blxFlowDiagram2 from "../assets/images/blx_flow_for_website(1).svg";
 
 const features = [
   {
-    title: "Trust",
-    description: "Guarantees on validity of allocations, information, and markets across California all provided by a single network.",
+    title: "GSAs",
+    description: "As you create groundwater allocations you are creating valuable water assets. Basin Logix unlocks the value you create and provides your stakeholders a way to access it.",
     image: "/images/features/noun_branding_1885335.svg"
   },
   {
-    title: "Transparency", 
-    description: "Auditability and transparency only when you need it. All information is stored on the network, but is only shared when there is an issue.",
+    title: "Owners", 
+    description: "Land ownership is water ownership and your water is your most important asset. Basin Logix treats it as such. Track, transfer, and trust your water assets.",
     image: "/images/features/noun_The Process_1885341.svg"
   },
-  {
-    title: "Transfer",
-    description: "Moving digital water should be cheap and easy. Assets on Basin Logix have dynamic value and information which are linked together.",
-    image: "/images/features/noun_3d modeling_1885342.svg"
-  }
+//   {
+//     title: "Transfer",
+//     description: "Moving digital water should be cheap and easy. Assets on Basin Logix have dynamic value and information which are linked together.",
+//     image: "/images/features/noun_3d modeling_1885342.svg"
+//   }
 ];
 ---
 
@@ -33,7 +38,7 @@ const features = [
 							<li>future</li>
 							<li>current</li>
 							<li>local</li>
-							<li>state</li>
+							<li>SGMA</li>
 						</ul>
 						<p class="water">water</p>
 						<ul class="roll-two word2">
@@ -41,7 +46,7 @@ const features = [
 							<li>options</li>
 							<li>rights</li>
 							<li>worries</li>
-							<li>trading</li>
+							<li>transfers</li>
 							<li>compliance</li>
 						</ul>
 						<div class="final-text">
@@ -50,9 +55,10 @@ const features = [
 							<span class="basin-logix">Basin Logix</span>
 						</div>
 					</div>
-					<p><strong>Basin Logix makes it easy to account for all your water resources quickly, accurately, and confidently.</strong></p>
-					
-					<div class="call mt-4">
+					<p>Unlock SGMA's silver lining and look beyond compliance.<span class="silver-glow"> Transform your water into assets.</span></p>
+					<!-- <p><strong>Know your limits and grow your limits</strong></p> -->
+
+					<!-- <div class="call mt-4">
 						<div class="call-box-top">
 							<div class="call-phone">
 								<strong>Phone:</strong>
@@ -64,7 +70,7 @@ const features = [
 							</div>
 						</div>
 						<a href="#" class="button button-primary mt-2" data-get-started>Get Started</a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -89,8 +95,101 @@ const features = [
 			</div>
 		</div>
 	</div>
+
+	<div class="strip strip-white">
+		<div class="container pt-6 pb-6 pt-md-10 pb-md-10">
+			<div class="row justify-content-center">
+				<div class="col-12 text-center mb-4">
+					<h2>Interactive Demo</h2>
+					<p>Experience our water allocation system in action</p>
+				</div>
+				<div class="col-12 col-lg-8 mx-auto mb-4">
+					<div class="demo-overlay-container">
+						<div class="demo-image">
+							<img src="/images/BLX_GUI_2022_per.png" alt="Basin Logix GUI Interface" class="img-fluid rounded shadow" />
+						</div>
+						<div class="demo-container">
+							<canvas id="rive-canvas" width="800" height="600"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="full-panel bg-gray-100">
+		<div class="container">
+			<div class="diagram-overlay-container">
+				<Image src={blxFlowDiagram} alt="BlockLink Exchange Flow Diagram" class="flow-diagram" />
+				<div class="overlay-text top-left">
+					<h2>Create Water Assets with Trust</h2>
+					<p>Push beyond databases and spreadsheets with the Basin Logix Blockchain. We couple information and value so you can transact on directly on our platform.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 
+	<div class="full-panel green-panel">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-12 col-lg-8 text-center">
+					<h2>Transparency</h2>
+					<p>Parcel level ETaw</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<div class="full-panel teal-panel">
+		<div class="container">
+			<div class="diagram-overlay-container">
+				<Image src={blxFlowDiagram2} alt="BlockLink Exchange Flow Diagram Alternative" class="flow-diagram" />
+				<div class="overlay-text top-left">
+					<h2>Track and Transfer Water Assets with Trust</h2>
+					<p>Know and grow your limits. It's not just about tracking for compliance, it's about accounting for your assets.<br>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="full-panel blue-panel">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-12 col-lg-8 text-center">
+					<h2>Collaboration</h2>
+					<p>Creating a network of stakeholders working together to solve California's water challenges.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="full-panel green-panel">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-12 col-lg-8 text-center">
+					<h2>Growth</h2>
+					<p>Enabling water users to grow and thrive while maintaining environmental responsibility.</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </Layout>
 
+<script>
+import { Rive } from '@rive-app/canvas';
+
+document.addEventListener('DOMContentLoaded', () => {
+	const canvas = document.getElementById('rive-canvas') as HTMLCanvasElement;
+	if (canvas) {
+		new Rive({
+			src: '/water_bar_demo.riv',
+			canvas: canvas,
+			autoplay: true,
+		});
+	}
+});
+</script>
 
 <style>
 	.call {
@@ -321,6 +420,7 @@ const features = [
 		margin: 2rem auto;
 		width: 100vw;
 		max-width: 1700px;
+		max-height: 120px;
 		text-align: center;
 	}
 
@@ -341,6 +441,7 @@ const features = [
 		line-height: 7vw;
 		font-size: 5vw;
 		font-weight: 600;
+		max-height: 120px;
 	}
 
 	.final-text {
@@ -426,7 +527,7 @@ const features = [
 		28.57% { transform: translateX(29vw) }
 		42.85% { transform: translateX(32vw) }
 		57.14% { transform: translateX(25vw) }
-		71.42% { transform: translateX(26vw) }
+		71.42% { transform: translateX(29vw) }
 		85.71% { transform: translateX(13vw) }
 		100% { transform: translateX(13vw) }
 	}
@@ -437,7 +538,7 @@ const features = [
 		28.57% { transform: translateX(43vw) translateY(-14vw) }
 		42.85% { transform: translateX(46vw) translateY(-21vw) }
 		57.14% { transform: translateX(39vw) translateY(-28vw) }
-		71.42% { transform: translateX(39.5vw) translateY(-35vw) }
+		71.42% { transform: translateX(42.5vw) translateY(-35vw) }
 		85.71% { transform: translateX(43vw) translateY(-42vw) }
 		100% { transform: translateX(43vw) translateY(-42vw) }
 	}
@@ -453,7 +554,361 @@ const features = [
 		100% { opacity: 1; transform: translateX(28vw) }
 	}
 
+	.silver-glow {
+		color: #1a1a1a;
+		text-shadow: 
+			0 0 2px rgba(255, 255, 255, 0.8),
+			0 0 4px rgba(255, 255, 255, 0.8),
+			0 0 6px rgba(255, 255, 255, 0.8),
+			0 0 8px rgba(255, 255, 255, 0.8),
+			0 0 10px rgba(255, 255, 255, 0.8),
+			0 0 12px rgba(255, 255, 255, 0.8),
+			0 0 14px rgba(255, 255, 255, 0.8),
+			0 0 16px rgba(255, 255, 255, 0.8),
+			0 0 18px rgba(255, 255, 255, 0.8),
+			0 0 20px rgba(255, 255, 255, 0.8),
+			0 0 22px rgba(255, 255, 255, 0.8),
+			0 0 24px rgba(255, 255, 255, 0.8),
+			0 0 26px rgba(255, 255, 255, 0.8),
+			0 0 28px rgba(255, 255, 255, 0.8),
+			0 0 30px rgba(255, 255, 255, 0.8);
+		animation: silver-pulse 2s ease-in-out infinite;
+	}
+
+	@keyframes silver-pulse {
+		0% { text-shadow: 
+			0 0 2px rgba(255, 255, 255, 0.8),
+			0 0 4px rgba(255, 255, 255, 0.8),
+			0 0 6px rgba(255, 255, 255, 0.8),
+			0 0 8px rgba(255, 255, 255, 0.8),
+			0 0 10px rgba(255, 255, 255, 0.8),
+			0 0 12px rgba(255, 255, 255, 0.8),
+			0 0 14px rgba(255, 255, 255, 0.8),
+			0 0 16px rgba(255, 255, 255, 0.8),
+			0 0 18px rgba(255, 255, 255, 0.8),
+			0 0 20px rgba(255, 255, 255, 0.8),
+			0 0 22px rgba(255, 255, 255, 0.8),
+			0 0 24px rgba(255, 255, 255, 0.8),
+			0 0 26px rgba(255, 255, 255, 0.8),
+			0 0 28px rgba(255, 255, 255, 0.8),
+			0 0 30px rgba(255, 255, 255, 0.8);
+		}
+		50% { text-shadow: 
+			0 0 4px rgba(255, 255, 255, 0.9),
+			0 0 8px rgba(255, 255, 255, 0.9),
+			0 0 12px rgba(255, 255, 255, 0.9),
+			0 0 16px rgba(255, 255, 255, 0.9),
+			0 0 20px rgba(255, 255, 255, 0.9),
+			0 0 24px rgba(255, 255, 255, 0.9),
+			0 0 28px rgba(255, 255, 255, 0.9),
+			0 0 32px rgba(255, 255, 255, 0.9),
+			0 0 36px rgba(255, 255, 255, 0.9),
+			0 0 40px rgba(255, 255, 255, 0.9),
+			0 0 44px rgba(255, 255, 255, 0.9),
+			0 0 48px rgba(255, 255, 255, 0.9),
+			0 0 52px rgba(255, 255, 255, 0.9),
+			0 0 56px rgba(255, 255, 255, 0.9),
+			0 0 60px rgba(255, 255, 255, 0.9);
+		}
+		100% { text-shadow: 
+			0 0 2px rgba(255, 255, 255, 0.8),
+			0 0 4px rgba(255, 255, 255, 0.8),
+			0 0 6px rgba(255, 255, 255, 0.8),
+			0 0 8px rgba(255, 255, 255, 0.8),
+			0 0 10px rgba(255, 255, 255, 0.8),
+			0 0 12px rgba(255, 255, 255, 0.8),
+			0 0 14px rgba(255, 255, 255, 0.8),
+			0 0 16px rgba(255, 255, 255, 0.8),
+			0 0 18px rgba(255, 255, 255, 0.8),
+			0 0 20px rgba(255, 255, 255, 0.8),
+			0 0 22px rgba(255, 255, 255, 0.8),
+			0 0 24px rgba(255, 255, 255, 0.8),
+			0 0 26px rgba(255, 255, 255, 0.8),
+			0 0 28px rgba(255, 255, 255, 0.8),
+			0 0 30px rgba(255, 255, 255, 0.8);
+		}
+	}
+
 	html {
 		scroll-behavior: smooth;
+	}
+
+	.full-panel {
+		padding: 3rem 0;
+		position: relative;
+		overflow: hidden;
+	}
+
+	@media (min-width: 768px) {
+		.full-panel {
+			padding: 5rem 0;
+		}
+	}
+
+	.full-panel::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: 
+			radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+			radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+		pointer-events: none;
+	}
+
+	.blue-panel {
+		background: linear-gradient(135deg, var(--primary-color) 0%, #156fa0 100%);
+		color: white;
+	}
+
+	.green-panel {
+		background: linear-gradient(135deg, #3c8556 0%, #2d6440 100%);
+		color: white;
+	}
+
+	.teal-panel {
+		background: linear-gradient(135deg, var(--white-offset) 0%, #6a9a8a 100%);
+		color: white;
+	}
+
+	.full-panel h2 {
+		font-size: 2.5rem;
+		margin-bottom: 1.5rem;
+		font-weight: 700;
+	}
+
+	.full-panel p {
+		font-size: 1.2rem;
+		line-height: 1.6;
+		opacity: 0.9;
+	}
+
+	@media (max-width: 768px) {
+		.full-panel {
+			padding: 4rem 0;
+		}
+
+		.full-panel h2 {
+			font-size: 2rem;
+		}
+
+		.full-panel p {
+			font-size: 1.1rem;
+		}
+	}
+
+	.flow-diagram {
+		width: 100%;
+		height: auto;
+		display: block;
+		margin: 0 auto;
+		transition: transform 0.3s ease;
+	}
+
+	.flow-diagram:hover {
+		transform: scale(1.02);
+	}
+
+	.diagram-overlay-container {
+		position: relative;
+		width: 100%;
+	}
+
+	.overlay-text {
+		position: absolute;
+		max-width: 350px;
+		text-align: left;
+		padding: 1.5rem;
+		background: rgba(255, 255, 255, 0.9);
+		backdrop-filter: blur(5px);
+		border-radius: 12px;
+		box-shadow: 
+			0 12px 28px rgba(0, 0, 0, 0.08),
+			0 4px 12px rgba(0, 0, 0, 0.04),
+			inset 0 1px 0 rgba(255, 255, 255, 0.5);
+		z-index: 5;
+		transition: all 0.3s ease;
+	}
+
+	.overlay-text::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: linear-gradient(90deg, 
+			rgba(27, 129, 187, 0.4) 0%, 
+			rgba(133, 190, 169, 0.4) 100%);
+		border-radius: 12px 12px 0 0;
+	}
+
+	.overlay-text h2 {
+		font-size: 1.8rem;
+		margin-bottom: 0.75rem;
+		color: var(--primary-color);
+	}
+
+	.overlay-text p {
+		font-size: 1rem;
+		line-height: 1.5;
+		font-weight: 500;
+		color: var(--grey);
+	}
+
+	.teal-panel .overlay-text {
+		background: rgba(255, 255, 255, 0.95);
+	}
+
+	.teal-panel .overlay-text h2 {
+		color: var(--primary-color);
+	}
+
+	.teal-panel .overlay-text p {
+		color: var(--grey);
+	}
+
+	.top-left {
+		top: 30px;
+		left: 30px;
+	}
+
+	.top-right {
+		top: 30px;
+		right: 30px;
+	}
+
+	.demo-overlay-container {
+		position: relative;
+		display: inline-block;
+		width: 100%;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+		border-radius: 12px;
+		overflow: hidden;
+		transition: transform 0.3s ease;
+	}
+
+	.demo-overlay-container:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+	}
+
+	.demo-image {
+		position: relative;
+		width: 100%;
+	}
+
+	.demo-image img {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 12px;
+	}
+
+	.demo-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 12px;
+		padding: 0;
+		pointer-events: none;
+	}
+
+	#rive-canvas {
+		width: 100%;
+		height: 100%;
+		border-radius: 12px;
+		background: none !important;
+		mix-blend-mode: normal;
+		opacity: 1;
+	}
+
+	.strip-white {
+		background: var(--white);
+	}
+
+	@media (max-width: 992px) {
+		.overlay-text {
+			position: relative;
+			max-width: 100%;
+			top: auto;
+			left: auto;
+			right: auto;
+			margin-top: -60px;
+			z-index: 2;
+		}
+		
+		.top-left, .top-right {
+			top: auto;
+			left: auto;
+			right: auto;
+		}
+	}
+
+	@media (min-width: 1920px) {
+		.rolodex {
+			height: 120px;
+			font-size: 80px;
+		}
+
+		.rolodex > p,
+		.rolodex ul,
+		.rolodex li {
+			line-height: 120px;
+			font-size: 80px;
+		}
+
+		.final-text {
+			line-height: 120px;
+			font-size: 80px;
+		}
+
+		@keyframes roll-up-one {
+			0% { transform: translateY(0) }
+			14.28% { transform: translateY(-120px) }
+			28.57% { transform: translateY(-240px) }
+			42.85% { transform: translateY(-360px) }
+			57.14% { transform: translateY(-480px) }
+			71.42% { transform: translateY(-600px) }
+			85.71% { transform: translateY(-720px) }
+			100% { transform: translateY(-720px) }
+		}
+
+		@keyframes water-shift {
+			0% { transform: translateX(496px) }
+			14.28% { transform: translateX(528px) }
+			28.57% { transform: translateX(464px) }
+			42.85% { transform: translateX(512px) }
+			57.14% { transform: translateX(400px) }
+			71.42% { transform: translateX(464px) }
+			85.71% { transform: translateX(208px) }
+			100% { transform: translateX(208px) }
+		}
+
+		@keyframes word2-shift {
+			0% { transform: translateX(720px) translateY(0) }
+			14.28% { transform: translateX(752px) translateY(-120px) }
+			28.57% { transform: translateX(688px) translateY(-240px) }
+			42.85% { transform: translateX(736px) translateY(-360px) }
+			57.14% { transform: translateX(624px) translateY(-480px) }
+			71.42% { transform: translateX(680px) translateY(-600px) }
+			85.71% { transform: translateX(688px) translateY(-720px) }
+			100% { transform: translateX(688px) translateY(-720px) }
+		}
+
+		@keyframes final-text-appear {
+			0% { opacity: 0; transform: translateX(192px) }
+			14.28% { opacity: 0; transform: translateX(192px) }
+			28.57% { opacity: 0; transform: translateX(192px) }
+			42.85% { opacity: 0; transform: translateX(192px) }
+			57.14% { opacity: 0; transform: translateX(192px) }
+			71.42% { opacity: 0; transform: translateX(192px) }
+			85.71% { opacity: 1; transform: translateX(448px) }
+			100% { opacity: 1; transform: translateX(448px) }
+		}
 	}
 </style>
