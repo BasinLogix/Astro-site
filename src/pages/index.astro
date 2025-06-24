@@ -15,7 +15,7 @@ const features = [
   },
   {
     title: "Owners", 
-    description: "Land ownership is water ownership and your water is your most important asset. Basin Logix treats it as such. Track, transfer, and trust your water assets.",
+    description: "Land ownership is water ownership and your water is your most important asset. Basin Logix treats it as such. Track, transact, and trust your water assets.",
     image: "/images/features/noun_The Process_1885341.svg"
   },
 //   {
@@ -83,6 +83,23 @@ const features = [
 		</div>
 	</div> -->
 
+	<div class="mobile-features-section">
+		<div class="container">
+			<div class="row justify-content-center g-4">
+				{features.map((feature) => (
+					<div class="col-12 col-md-6">
+						<div class="feature mobile-feature">
+							<h2 class="feature-title">{feature.title}</h2>
+							<div class="feature-content">
+								<p>{feature.description}</p>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+
 	<div class="gui-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -103,6 +120,12 @@ const features = [
 							</div>
 						))}
 					</div>
+					<div class="mobile-overlay-text">
+						<div class="feature mobile-feature">
+							<h2>Water, Data, and Value flowing together</h2>
+							<p>Track and transact all in one place</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -110,8 +133,8 @@ const features = [
 
 	<div class="section-wrapper">
 		<div class="overlay-text-straddling">
-			<h2>Create Water Assets with Trust</h2>
-			<p>Push beyond databases and spreadsheets with the Basin Logix Blockchain. We couple information and value so you can transact on directly on our platform.</p>
+			<h2>Water, Data, and Value flowing together</h2>
+			<p>Track and transact all in one place </p>
 		</div>
 		
 		<div class="full-panel blue-panel">
@@ -388,6 +411,13 @@ const features = [
 
 		.call {
 			margin-top: 2rem;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.intro {
+			height: 400px;
+			padding: 4rem 0 1rem 0;
 		}
 	}
 
@@ -704,6 +734,7 @@ const features = [
 		padding: 4rem 0 0 0;
 	}
 
+
 	.gui-section::before {
 		content: '';
 		position: absolute;
@@ -761,15 +792,83 @@ const features = [
 		margin-right: 0;
 	}
 
+	.mobile-features-section {
+		display: none;
+		padding: 3rem 0;
+		background: url('/images/IMG_20211029_142720.jpg');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		position: relative;
+	}
+
+	.mobile-features-section::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(255, 255, 255, 0.3);
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.mobile-features-section .container {
+		position: relative;
+		z-index: 2;
+	}
+
+	.mobile-overlay-text {
+		display: none;
+	}
+
 	@media (max-width: 768px) {
+		.mobile-features-section {
+			display: block;
+		}
+
 		.feature-overlay {
-			flex-direction: column;
-			padding: 1rem;
-			gap: 1rem;
+			display: none;
+		}
+
+		.gui-section {
+			background: url('/images/IMG_20211029_142720.jpg');
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
 		}
 		
-		.feature-floating {
-			max-width: 100%;
+		.mobile-features-section {
+			background: url('/images/IMG_20211029_142720.jpg');
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+		}
+
+		.gui-image {
+			transform: translateY(-300px);
+		}
+
+		.overlay-text-straddling {
+			display: none;
+		}
+
+		.mobile-overlay-text {
+			display: block;
+			position: absolute;
+			bottom: 2rem;
+			left: 50%;
+			transform: translateX(-50%);
+			width: calc(100% - 2rem);
+			max-width: 400px;
+		}
+
+		.flow-diagram {
+			transform: translateY(0px);
+			z-index: 200;
 		}
 	}
 
