@@ -14,6 +14,8 @@ const gsaData = await import('../data/AllPostedGSA_2025-06-10.csv?raw').then(mod
       <p>Tell us about your organization and we'll help you get started.</p>
     </div>
     <form id="customer-intake-form" class="intake-form">
+      <input type="hidden" name="access_key" value="3cca5dad-a2ae-4daa-aeed-8ba15bb35bf4">
+      <input type="hidden" name="subject" value="New Customer Intake Form Submission">
       <div class="form-row">
         <div class="form-group">
           <label for="first-name">First Name *</label>
@@ -74,6 +76,7 @@ const gsaData = await import('../data/AllPostedGSA_2025-06-10.csv?raw').then(mod
       </div>
 
       <button type="submit" class="submit-button">Submit</button>
+      <div id="result"></div>
     </form>
   </div>
 </div>
@@ -194,42 +197,48 @@ const gsaData = await import('../data/AllPostedGSA_2025-06-10.csv?raw').then(mod
   });
 
   // Form submission
+  const result = document.getElementById('result');
+  
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     
-    // Create a new object to hold the form data
-    const data: Record<string, any> = {};
+    // Add selected GSAs to form data as a comma-separated string
+    formData.set('gsas', Array.from(selectedGsas).join(', '));
     
-    // Add all form fields to the data object
-    for (const [key, value] of formData.entries()) {
-      data[key] = value;
-    }
-    
-    // Add selected GSAs to form data
-    data.gsas = Array.from(selectedGsas);
-    
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    if (result) result.innerHTML = "Please wait...";
+
     try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch('/api/submit-intake', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify(data),
+        body: json
       });
 
-      if (response.ok) {
-        alert('Thank you for your interest! We will contact you soon.');
-        closeDrawer();
-        (e.target as HTMLFormElement).reset();
-        selectedGsas.clear();
-        updateSelectedGsasDisplay();
+      let responseJson = await response.json();
+      if (response.status == 200) {
+        if (result) result.innerHTML = responseJson.message;
+        // Close drawer and reset form after successful submission
+        setTimeout(() => {
+          closeDrawer();
+          (e.target as HTMLFormElement).reset();
+          selectedGsas.clear();
+          updateSelectedGsasDisplay();
+          if (result) result.innerHTML = "";
+        }, 2000);
       } else {
-        throw new Error('Submission failed');
+        console.log(response);
+        if (result) result.innerHTML = responseJson.message;
       }
     } catch (error) {
-      alert('There was an error submitting the form. Please try again.');
+      console.log(error);
+      if (result) result.innerHTML = "Something went wrong!";
     }
   });
 </script>
@@ -372,6 +381,21 @@ const gsaData = await import('../data/AllPostedGSA_2025-06-10.csv?raw').then(mod
   .submit-button:hover {
     background: #156fa0;
     transform: translateY(-1px);
+  }
+
+  #result {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    background: rgba(27, 129, 187, 0.1);
+    color: var(--primary-color);
+    display: none;
+  }
+
+  #result:not(:empty) {
+    display: block;
   }
 
   /* GSA Selection Styles */
