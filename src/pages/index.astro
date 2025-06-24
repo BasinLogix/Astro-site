@@ -5,6 +5,7 @@ import heroImg from "../assets/images/hero.jpg";
 import farmImg from "../assets/images/farm.jpg";
 import blxFlowDiagram from "../assets/images/blx_flow_for_website.svg";
 import blxFlowDiagram2 from "../assets/images/blx_flow_for_website(1).svg";
+import waterAssetAccounting from "../assets/images/Water Asset Accounting.svg";
 
 const features = [
   {
@@ -75,55 +76,48 @@ const features = [
 			</div>
 		</div>
 	</div>
-
+<!-- 
 	<div class="strip strip-grey">
 		<div class="container pt-6 pb-6 pt-md-10 pb-md-10">
-			<div class="row justify-content-center g-4">
-				{features.map((feature) => (
-					<div class="col-12 col-md-6 col-lg-4 mb-2">
-						<div class="feature">
-							<div class="feature-image">
-								<img width="100" height="100" alt={`${feature.title} logo`} src={feature.image} />
-							</div>
-							<h2 class="feature-title">{feature.title}</h2>
-							<div class="feature-content">
-								<p>{feature.description}</p>
-							</div>
-						</div>
-					</div>
-				))}
-			</div>
-		</div>
-	</div>
 
-	<div class="strip strip-white">
-		<div class="container pt-6 pb-6 pt-md-10 pb-md-10">
-			<div class="row justify-content-center">
-				<div class="col-12 text-center mb-4">
-					<h2>Interactive Demo</h2>
-					<p>Experience our water allocation system in action</p>
-				</div>
-				<div class="col-12 col-lg-8 mx-auto mb-4">
-					<div class="demo-overlay-container">
-						<div class="demo-image">
-							<img src="/images/BLX_GUI_2022_per.png" alt="Basin Logix GUI Interface" class="img-fluid rounded shadow" />
-						</div>
-						<div class="demo-container">
-							<canvas id="rive-canvas" width="800" height="600"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="full-panel bg-gray-100">
+	<div class="gui-section">
 		<div class="container">
-			<div class="diagram-overlay-container">
-				<Image src={blxFlowDiagram} alt="BlockLink Exchange Flow Diagram" class="flow-diagram" />
-				<div class="overlay-text top-left">
-					<h2>Create Water Assets with Trust</h2>
-					<p>Push beyond databases and spreadsheets with the Basin Logix Blockchain. We couple information and value so you can transact on directly on our platform.</p>
+			<div class="row justify-content-center">
+				<div class="col-12 text-center position-relative">
+					<img src="/images/BLX_GUI_2022_per.png" alt="Basin Logix GUI Interface" class="gui-image" />
+					<div class="feature-overlay">
+						{features.map((feature) => (
+							<div class="feature-floating">
+								<div class="feature">
+									{/* <div class="feature-image">
+										<img width="100" height="100" alt={`${feature.title} logo`} src={feature.image} />
+									</div> */}
+									<h2 class="feature-title">{feature.title}</h2>
+									<div class="feature-content">
+										<p>{feature.description}</p>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section-wrapper">
+		<div class="overlay-text-straddling">
+			<h2>Create Water Assets with Trust</h2>
+			<p>Push beyond databases and spreadsheets with the Basin Logix Blockchain. We couple information and value so you can transact on directly on our platform.</p>
+		</div>
+		
+		<div class="full-panel blue-panel">
+			<div class="container">
+				<div class="diagram-overlay-container">
+					<Image src={waterAssetAccounting} alt="Water Asset Accounting Diagram" class="flow-diagram" />
 				</div>
 			</div>
 		</div>
@@ -140,7 +134,7 @@ const features = [
 		</div>
 	</div> -->
 
-	<div class="full-panel teal-panel">
+	<!-- <div class="full-panel teal-panel">
 		<div class="container">
 			<div class="diagram-overlay-container">
 				<Image src={blxFlowDiagram2} alt="BlockLink Exchange Flow Diagram Alternative" class="flow-diagram" />
@@ -173,23 +167,9 @@ const features = [
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </Layout>
 
-<script>
-import { Rive } from '@rive-app/canvas';
-
-document.addEventListener('DOMContentLoaded', () => {
-	const canvas = document.getElementById('rive-canvas') as HTMLCanvasElement;
-	if (canvas) {
-		new Rive({
-			src: '/water_bar_demo.riv',
-			canvas: canvas,
-			autoplay: true,
-		});
-	}
-});
-</script>
 
 <style>
 	.call {
@@ -500,6 +480,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	.word2 {
+		position: absolute;
+		top: 0;
+		left: 0;
 		animation: word2-shift 21s forwards cubic-bezier(.75,0,.25,1);
 	}
 
@@ -637,6 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		padding: 3rem 0;
 		position: relative;
 		overflow: hidden;
+		z-index: 50;
 	}
 
 	@media (min-width: 768px) {
@@ -659,8 +643,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	.blue-panel {
-		background: linear-gradient(135deg, var(--primary-color) 0%, #156fa0 100%);
-		color: white;
+		background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+		color: #333;
 	}
 
 	.green-panel {
@@ -704,12 +688,91 @@ document.addEventListener('DOMContentLoaded', () => {
 		height: auto;
 		display: block;
 		margin: 0 auto;
-		transition: transform 0.3s ease;
+		position: relative;
+		z-index: 10;
+		padding-top: 20px;
 	}
 
-	.flow-diagram:hover {
-		transform: scale(1.02);
+	.gui-section {
+		margin-bottom: 0;
+		position: relative;
+		z-index: 10;
+		background: url('/images/IMG_20211029_142720.jpg');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		padding: 4rem 0 0 0;
 	}
+
+	.gui-section::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(255, 255, 255, 0.3);
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.gui-section .container {
+		position: relative;
+		z-index: 2;
+	}
+
+	.gui-section + .full-panel {
+		padding-top: 0;
+	}
+
+	.gui-image {
+		width: 100%;
+		height: auto;
+		display: block;
+		margin: 0 auto;
+		max-width: 100%;
+		position: relative;
+		z-index: 10;
+		transform: translateY(-100px);
+	}
+
+	.feature-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		display: flex;
+		justify-content: space-between;
+		padding: 2rem;
+		gap: 2rem;
+	}
+
+	.feature-floating {
+		flex: 1;
+		max-width: 400px;
+	}
+
+	.feature-floating:first-child {
+		margin-left: 0;
+	}
+
+	.feature-floating:last-child {
+		margin-right: 0;
+	}
+
+	@media (max-width: 768px) {
+		.feature-overlay {
+			flex-direction: column;
+			padding: 1rem;
+			gap: 1rem;
+		}
+		
+		.feature-floating {
+			max-width: 100%;
+		}
+	}
+
 
 	.diagram-overlay-container {
 		position: relative;
@@ -721,29 +784,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		max-width: 350px;
 		text-align: left;
 		padding: 1.5rem;
-		background: rgba(255, 255, 255, 0.9);
-		backdrop-filter: blur(5px);
-		border-radius: 12px;
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(20px);
+		border: none;
+		border-radius: 16px;
 		box-shadow: 
-			0 12px 28px rgba(0, 0, 0, 0.08),
-			0 4px 12px rgba(0, 0, 0, 0.04),
-			inset 0 1px 0 rgba(255, 255, 255, 0.5);
+			0 8px 32px rgba(0, 0, 0, 0.08),
+			0 2px 8px rgba(0, 0, 0, 0.04);
 		z-index: 5;
 		transition: all 0.3s ease;
 	}
 
-	.overlay-text::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 2px;
-		background: linear-gradient(90deg, 
-			rgba(27, 129, 187, 0.4) 0%, 
-			rgba(133, 190, 169, 0.4) 100%);
-		border-radius: 12px 12px 0 0;
-	}
 
 	.overlay-text h2 {
 		font-size: 1.8rem;
@@ -759,7 +810,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	.teal-panel .overlay-text {
-		background: rgba(255, 255, 255, 0.95);
+		background: rgba(255, 255, 255, 0.1);
 	}
 
 	.teal-panel .overlay-text h2 {
@@ -780,52 +831,42 @@ document.addEventListener('DOMContentLoaded', () => {
 		right: 30px;
 	}
 
-	.demo-overlay-container {
+	.section-wrapper {
 		position: relative;
-		display: inline-block;
-		width: 100%;
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-		border-radius: 12px;
-		overflow: hidden;
-		transition: transform 0.3s ease;
 	}
 
-	.demo-overlay-container:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-	}
-
-	.demo-image {
-		position: relative;
-		width: 100%;
-	}
-
-	.demo-image img {
-		width: 100%;
-		height: auto;
-		display: block;
-		border-radius: 12px;
-	}
-
-	.demo-container {
+	.overlay-text-straddling {
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		border-radius: 12px;
-		padding: 0;
-		pointer-events: none;
+		max-width: 600px;
+		text-align: center;
+		padding: 2rem;
+		background: rgba(255, 255, 255, 0.95);
+		backdrop-filter: blur(20px);
+		border: none;
+		border-radius: 16px;
+		box-shadow: 
+			0 8px 32px rgba(0, 0, 0, 0.12),
+			0 2px 8px rgba(0, 0, 0, 0.06);
+		top: -50px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 100;
+		transition: all 0.3s ease;
 	}
 
-	#rive-canvas {
-		width: 100%;
-		height: 100%;
-		border-radius: 12px;
-		background: none !important;
-		mix-blend-mode: normal;
-		opacity: 1;
+	.overlay-text-straddling h2 {
+		font-size: 1.8rem;
+		margin-bottom: 0.75rem;
+		color: var(--primary-color);
 	}
+
+	.overlay-text-straddling p {
+		font-size: 1rem;
+		line-height: 1.5;
+		font-weight: 500;
+		color: var(--grey);
+	}
+
 
 	.strip-white {
 		background: var(--white);
